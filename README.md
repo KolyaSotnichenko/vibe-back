@@ -23,7 +23,72 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Vibe Backend API** - A robust backend API for the Vibe project management system built with NestJS.
+
+### Features
+
+- ✅ **Projects Management** - Full CRUD operations for projects
+- 🔐 **API Key Authentication** - Secure endpoints with API key validation
+- 📚 **Swagger Documentation** - Interactive API documentation
+- ✔️ **Input Validation** - Comprehensive validation with class-validator
+- 💾 **In-Memory Storage** - Fast, lightweight storage for development
+- 🎯 **TypeScript** - Full type safety, no "any" types
+- 🛡️ **Security Best Practices** - Protected endpoints and input sanitization
+
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+$ pnpm install
+$ pnpm add @nestjs/swagger class-validator class-transformer
+```
+
+### 2. Start the Development Server
+
+```bash
+$ pnpm run start:dev
+```
+
+### 3. Access the API
+
+- **API Base URL**: http://localhost:3000
+- **Swagger Docs**: http://localhost:3000/api
+- **Test API Key**: `vibe-test-api-key-2024-secure-token-12345`
+
+## API Documentation
+
+### Projects API
+
+The Projects API provides comprehensive CRUD operations:
+
+- `POST /projects` - Create a new project
+- `GET /projects` - Get all projects (with optional filters)
+- `GET /projects/:id` - Get a specific project
+- `PATCH /projects/:id` - Update a project
+- `DELETE /projects/:id` - Delete a project
+- `GET /projects/statistics` - Get project statistics
+
+**Authentication**: All endpoints require the `X-API-Key` header.
+
+For detailed API documentation, see:
+- 📖 [Projects API Documentation](./docs/PROJECTS_API.md)
+- 🚀 [Setup Guide](./docs/SETUP.md)
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:3000/projects \
+  -H "X-API-Key: vibe-test-api-key-2024-secure-token-12345" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "My Project",
+    "description": "A test project for the API",
+    "status": "planning",
+    "startDate": "2024-03-01",
+    "owner": "admin@example.com"
+  }'
+```
 
 ## Project setup
 
