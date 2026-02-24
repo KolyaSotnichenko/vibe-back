@@ -7,7 +7,7 @@ import * as path from 'path';
 
 /**
  * Script to generate static OpenAPI JSON specification
- * This creates a openapi.json file in the docs directory
+ * This creates a openapi.json file in the root directory
  */
 async function generateOpenApiSpec() {
   console.log('🔧 Starting OpenAPI specification generation...\n');
@@ -28,9 +28,9 @@ async function generateOpenApiSpec() {
 
   // Swagger configuration (same as in main.ts)
   const config = new DocumentBuilder()
-    .setTitle('Vibe Backend API')
+    .setTitle('ToDo API')
     .setDescription(
-      'Backend API for the Vibe project management system. All endpoints require API key authentication via X-API-Key header.',
+      'Simple ToDo API with in-memory storage. All endpoints require API key authentication via X-API-Key header.',
     )
     .setVersion('1.0')
     .addApiKey(
@@ -43,15 +43,12 @@ async function generateOpenApiSpec() {
       },
       'api-key',
     )
-    .addTag('General', 'General API information and utilities')
-    .addTag('Projects', 'Project management endpoints')
-    .addTag('OpenAPI', 'OpenAPI specification endpoints')
+    .addTag('Todos', 'Todo management endpoints')
     .addServer('http://localhost:3000', 'Development server')
-    .addServer('https://api.vibe.example.com', 'Production server')
     .setContact(
-      'Vibe Development Team',
-      'https://vibe.example.com',
-      'support@vibe.example.com',
+      'Development Team',
+      'https://example.com',
+      'support@example.com',
     )
     .setLicense('MIT', 'https://opensource.org/licenses/MIT')
     .build();
@@ -59,14 +56,8 @@ async function generateOpenApiSpec() {
   // Generate OpenAPI document
   const document = SwaggerModule.createDocument(app, config);
 
-  // Ensure docs directory exists
-  const docsDir = path.join(__dirname, '..', 'docs');
-  if (!fs.existsSync(docsDir)) {
-    fs.mkdirSync(docsDir, { recursive: true });
-  }
-
-  // Save OpenAPI JSON
-  const outputPath = path.join(docsDir, 'openapi.json');
+  // Save OpenAPI JSON to root directory
+  const outputPath = path.join(__dirname, '..', 'openapi.json');
   fs.writeFileSync(outputPath, JSON.stringify(document, null, 2));
 
   console.log('✅ OpenAPI specification generated successfully!');

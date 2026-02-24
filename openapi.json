@@ -1,0 +1,322 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/todos": {
+      "post": {
+        "operationId": "TodosController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTodoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The todo has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          }
+        },
+        "security": [
+          {
+            "api-key": []
+          }
+        ],
+        "summary": "Create a new todo",
+        "tags": [
+          "Todos"
+        ]
+      },
+      "get": {
+        "operationId": "TodosController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return all todos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Todo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api-key": []
+          }
+        ],
+        "summary": "Get all todos",
+        "tags": [
+          "Todos"
+        ]
+      }
+    },
+    "/todos/{id}": {
+      "get": {
+        "operationId": "TodosController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Todo ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the todo.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Todo not found."
+          }
+        },
+        "security": [
+          {
+            "api-key": []
+          }
+        ],
+        "summary": "Get a todo by ID",
+        "tags": [
+          "Todos"
+        ]
+      },
+      "patch": {
+        "operationId": "TodosController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Todo ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTodoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The todo has been successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "404": {
+            "description": "Todo not found."
+          }
+        },
+        "security": [
+          {
+            "api-key": []
+          }
+        ],
+        "summary": "Update a todo",
+        "tags": [
+          "Todos"
+        ]
+      },
+      "delete": {
+        "operationId": "TodosController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Todo ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The todo has been successfully deleted."
+          },
+          "404": {
+            "description": "Todo not found."
+          }
+        },
+        "security": [
+          {
+            "api-key": []
+          }
+        ],
+        "summary": "Delete a todo",
+        "tags": [
+          "Todos"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "ToDo API",
+    "description": "Simple ToDo API with in-memory storage. All endpoints require API key authentication via X-API-Key header.",
+    "version": "1.0",
+    "contact": {
+      "name": "Development Team",
+      "url": "https://example.com",
+      "email": "support@example.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "Todos",
+      "description": "Todo management endpoints"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "api-key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "API key for authentication. Test key: vibe-test-api-key-2024-secure-token-12345"
+      }
+    },
+    "schemas": {
+      "CreateTodoDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the todo",
+            "example": "Buy groceries"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the todo",
+            "example": "Buy milk, eggs, and bread from the store"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Completion status of the todo",
+            "example": false,
+            "default": false
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "Todo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the todo",
+            "example": "1"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title of the todo",
+            "example": "Buy groceries"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the todo",
+            "example": "Buy milk, eggs, and bread from the store"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Completion status of the todo",
+            "example": false,
+            "default": false
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Creation timestamp",
+            "example": "2026-02-24T10:30:00.000Z"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Last update timestamp",
+            "example": "2026-02-24T10:30:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "completed",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdateTodoDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the todo",
+            "example": "Buy groceries"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the todo",
+            "example": "Buy milk, eggs, and bread from the store"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Completion status of the todo",
+            "example": true
+          }
+        }
+      }
+    }
+  }
+}

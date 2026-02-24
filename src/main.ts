@@ -20,9 +20,9 @@ async function bootstrap() {
 
   // Swagger configuration
   const config = new DocumentBuilder()
-    .setTitle('Vibe Backend API')
+    .setTitle('ToDo API')
     .setDescription(
-      'Backend API for the Vibe project management system. All endpoints require API key authentication via X-API-Key header.',
+      'Simple ToDo API with in-memory storage. All endpoints require API key authentication via X-API-Key header.',
     )
     .setVersion('1.0')
     .addApiKey(
@@ -35,15 +35,12 @@ async function bootstrap() {
       },
       'api-key',
     )
-    .addTag('General', 'General API information and utilities')
-    .addTag('Projects', 'Project management endpoints')
-    .addTag('OpenAPI', 'OpenAPI specification endpoints')
+    .addTag('Todos', 'Todo management endpoints')
     .addServer('http://localhost:3000', 'Development server')
-    .addServer('https://api.vibe.example.com', 'Production server')
     .setContact(
-      'Vibe Development Team',
-      'https://vibe.example.com',
-      'support@vibe.example.com',
+      'Development Team',
+      'https://example.com',
+      'support@example.com',
     )
     .setLicense('MIT', 'https://opensource.org/licenses/MIT')
     .build();
@@ -78,8 +75,6 @@ async function bootstrap() {
   console.log(
     `📋 OpenAPI YAML: http://localhost:${port}/api-json/openapi.yaml`,
   );
-  console.log(
-    `🔑 Test API Key: vibe-test-api-key-2024-secure-token-12345\n`,
-  );
+  console.log(`🔑 Test API Key: vibe-test-api-key-2024-secure-token-12345\n`);
 }
-bootstrap();
+void bootstrap();
